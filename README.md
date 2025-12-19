@@ -24,18 +24,18 @@ This system is built for **speed** and **accuracy** on standard hardware (CPU). 
 
 ```mermaid
 graph TD
-    Client[🖥️ Frontend (HTML/JS)] <-->|Stream/API| Server[🚀 FastAPI Backend]
+    Client["🖥️ Frontend (HTML/JS)"] <-->|Stream/API| Server["🚀 FastAPI Backend"]
     
     subgraph "Backend Core"
-        Server -->|1. Parse| Parser[Hybrid Parser]
-        Server -->|2. Optimize| Filter[Smart Pre-Filter]
-        Server -->|3. Generate| AI[T5 AI Model]
+        Server -->|1. Parse| Parser["Hybrid Parser"]
+        Server -->|2. Optimize| Filter["Smart Pre-Filter"]
+        Server -->|3. Generate| AI["T5 AI Model"]
     end
     
     Parser -->|Text Needed| PyMuPDF
-    Parser -->|OCR Needed| Tesseract[Tesseract OCR]
+    Parser -->|"OCR Needed"| Tesseract["Tesseract OCR"]
     
-    Link[External Link] -.-> Tesseract
+    Link["External Link"] -.-> Tesseract
 ```
 
 ---
@@ -47,17 +47,17 @@ How the system decides whether to read the file directly or use OCR (Optical Cha
 
 ```mermaid
 graph LR
-    Start([Upload File]) --> CheckExt{Extension?}
-    CheckExt -->|DOCX| ReadDocx[Read Paragraphs]
-    CheckExt -->|PDF| ReadPDF[PyMuPDF Extract]
+    Start(["Upload File"]) --> CheckExt{"Extension?"}
+    CheckExt -->|DOCX| ReadDocx["Read Paragraphs"]
+    CheckExt -->|PDF| ReadPDF["PyMuPDF Extract"]
     
-    ReadPDF --> CheckLen{Text Length < 50?}
-    CheckLen -->|No (Good Text)| Clean[Clean Text]
-    CheckLen -->|Yes (Scanned)| OCR[Render Images -> Tesseract OCR]
+    ReadPDF --> CheckLen{"Text Length < 50?"}
+    CheckLen -->|"No (Good Text)"| Clean["Clean Text"]
+    CheckLen -->|"Yes (Scanned)"| OCR["Render Images -> Tesseract OCR"]
     
     ReadDocx --> Clean
     OCR --> Clean
-    Clean --> Output([Final Text])
+    Clean --> Output(["Final Text"])
 ```
 
 ### 2. Streaming Summarization Pipeline
